@@ -27,7 +27,7 @@ layout_table = dict(
 # Process Dataframe #
 #####################
 
-df = pd.read_csv('../assets/stopload_data.csv',
+df = pd.read_csv('assets/stopload_data.csv',
                  encoding='Windows-1252',
                  # dtype=str
                  )
