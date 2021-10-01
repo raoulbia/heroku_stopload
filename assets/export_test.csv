@@ -1,5 +1,0 @@
-﻿AtcoCode,PlateCode,ShortCommonName_en,ShortCommonName_ga,NbrStopsPerDay,RoutesPassingThrough,RoutesPassingThroughCount,OperatorsPassingThrough,OperatorsPassingThroughCount,HasPole,HasShelter,CarouselType,FlagData,StopAccessibility,WheelchairAccessibility,isRTPI,Latitude,Longitude
-8300B1050901,105091,The Long Walk,An Siúlán Fada,258," 100, 100x, 160, 161, 162, 166, 167, 168, 174, 174a, 174b",11, buseireann,1,No Pole,No Shelter,None,None,0,1,0,54.00573544,-6.404328583
-8300B131211,131211,Dundalk Hospital,Ospidéal,117," 100, 100x, 168, 174, 174b, 900, 901, 903, 904",9," buseireann, matthews",2,No Pole,Shelter,Shelter Panel,Stretched,0,1,0,53.98858053,-6.399021877
-8300B109231,109231,Dundalk,Dún Dealgan,69," 100, 166, 168, 174, 174b",5, buseireann,1,Pole,No Shelter,Short Carousel,Stretched,0,0,0,54.00215516,-6.404068925
-8300B138931,138931,Dublin Road,Bóthar BÁC,58," 100, 100x, 168, 174",4, buseireann,1,No Pole,Shelter,None,None,0,1,0,53.99869,-6.405711604
