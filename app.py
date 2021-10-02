@@ -6,6 +6,19 @@ from dash import html
 from dash.dependencies import Input, Output
 import pandas as pd
 
+style_data_conditional = [
+    {
+        "if": {"state": "active"},
+        "backgroundColor": "rgba(150, 180, 225, 0.2)",
+        "border": "1px solid blue",
+    },
+    {
+        "if": {"state": "selected"},
+        "backgroundColor": "rgba(0, 116, 217, .03)",
+        "border": "1px solid blue",
+    },
+]
+
 layout_table = dict(
     autosize=True,
     height=500,
@@ -66,15 +79,13 @@ ls = sorted(list(set(ls)))
 # print(len(ls))
 # print(ls[:5])
 
-
-
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets,
                 )
 # app.scripts.config.serve_locally = True
 # app.css.config.serve_locally = True
-server = app.server
+# server = app.server
 app.title = 'Stop Explorer'
 app.layout = html.Div(
     children=[
@@ -84,100 +95,101 @@ app.layout = html.Div(
                                              'background-image': 'url(https://www.transportforireland.ie/wp-content/themes/transportforireland/assets/img/branding/transport-for-ireland-logo.svg)',
                                              'background-position': 'left',
                                              'background-repeat': 'no-repeat'}) ,
-    # html.P('''
-    #         The Semantic MEDLINE Database (SemMedDB) is a repository of semantic predications (subject-predicate-object df) extracted
-    #         from approx. 29.7M PubMed citations.
-    #        '''),
+    html.P('''
+            Search for Bus Stops served by one or more routes. 
+            When selecting multiple routes, the application will show stops that
+            are served by either route. 
+            Select `shared`to see only the stops that are shared by the selected routes. 
+           ''', style={'textAlign': 'left',
+                       'marginLeft': 150,
+                       'marginRight': 100,
+                       'marginBottom': 50}),
 
     # Row 0
-    html.Div(
-        [
-            # Subject left drop down
-            html.Div(
-                [
-                    html.H3(''),
-                ], className='six columns'
-            ),
-        ], className='row'),
+    # html.Div(
+    #     [
+    #         # Subject left drop down
+    #         html.Div(
+    #             [
+    #                 html.H3(''),
+    #             ], className='six columns'
+    #         ),
+    #     ], className='row'),
+
 
     # Row 1
-    html.Div(
-        [
+
+    html.Div([
             # Subject left drop down
 
-                    html.Div('Routes', className='one columns',
-                             # style={"margin-bottom": "30px"}
-                             ),
+        html.Div(
+            ['Routes: '],
+                 className='one columns',
+                 style={"margin": 0}
+                 ),
 
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                id='routes-dropdown',
-                                placeholder='Select Route(s)...',
-                                # style={
-                                #     'width': '100%'
-                                # },
-                                multi=True,
-                                options=[{'label': item, 'value': item} for item in ls]),
+        html.Div(
+            [
+                dcc.Dropdown(
+                    id='routes-dropdown',
+                    placeholder='Select Route(s)...',
+                    multi=True,
+                    options=[{'label': item, 'value': item} for item in ls]),
 
-                        ], className='three columns'),
+            ], style={'marginBottom': 10, 'marginLeft':10},
+                className='three columns'),
 
-            # shared checkbox
-                    html.Div(
-                        [
-                            dcc.Checklist(
-                                id='shared-stop',
-                                options=[
-                                    {'label': 'shared', 'value': 'true'},
-                                ],
-                                value=[],
-                                # style={'display': 'inline-block',
-                                #        'position': 'absolute',
-                                #        'top':'90px',
-                                #        'left':'550px'}
-                            ),
+        # shared checkbox
+        html.Div(
+            [
+                    dcc.Checklist(
+                        id='shared-stop',
+                        options=[
+                            {'label': 'shared', 'value': 'true'},
+                        ],
+                        value=[],
+                        # style={'display': 'inline-block',
+                        #        'position': 'absolute',
+                        #        'top':'90px',
+                        #        'left':'550px'}
+                    ),
 
-                        ], className='two columns'),
-
+                ], className='two columns'),
 
         ], className='row'),
 
-    # Row 3
     html.Div(
         [
-
-            # Table 1
-            html.Div(
-                [
-                    dash_table.DataTable(
-                        css=[{'selector':'.export','rule':'position: relative;top:-20px;left:1050px;'}],
-                        id = 'datatable',
-                        columns=[{'id': c, 'name': c} for c in df.columns],
-                        data=df.to_dict('records'),
-                        export_format="csv",
-                        export_headers="display",
-                        selected_rows=[],
-                        sort_action='native',
-                        # filter_action='native',
-                        style_table={'height': '500px',
-                                     'overflowY': 'auto'},
-                        style_cell={'padding': '10px', 'textAlign': 'left'},
-                        style_data={'width': '150px',
-                                    'minWidth': '150px',
-                                    # 'maxWidth': '150px',
-                                    # 'overflow': 'hidden',
-                                    'textOverflow': 'ellipsis',}
-                        )
-                ], style=layout_table
-            ),
-
-            # Table 2
-            # html.Div(
-            #     [
-            #     ], style = layout_table, className='six columns'),
-        ], className='row'),
+            dash_table.DataTable(
+                css=[{'selector': '.export',
+                      # 'rule':'position: relative;top:-20px;left:1050px;'
+                      'rule': 'position: absolute;top:-10%;right: 0;width: 120px;'
+                      # 'rule':'display: flex;align-items: center;justify-content: space-between;'
+                      }],
+                id='datatable',
+                columns=[{'id': c, 'name': c} for c in df.columns],
+                data=df.to_dict('records'),
+                fixed_rows={'headers': True, 'data': 0},
+                export_format="csv",
+                export_headers="display",
+                # row_selectable='single',
+                # style_data_conditional=style_data_conditional,
+                # selected_rows=[],
+                sort_action='native',
+                # filter_action='native',
+                style_table={'height': '500px',
+                             'overflowY': 'auto'},
+                style_cell={'padding': '10px', 'textAlign': 'left'},
+                style_data={'width': '150px',
+                            'minWidth': '150px',
+                            # 'maxWidth': '150px',
+                            # 'overflow': 'hidden',
+                            'textOverflow': 'ellipsis', }
+            )
+        ], style=layout_table),
 
     ], className='ten columns offset-by-one'
+
 ) # end main Div
 
 
@@ -219,6 +231,25 @@ def update_datatable(x, y):
 
     # selected_rows = tmp.to_dict('records')
     return tmp.to_dict('records')
+
+# @app.callback(
+#     Output("datatable", "style_data_conditional"),
+#     [Input("datatable", "active_cell")]
+# )
+# def update_selected_row_color(active):
+#     print(active)
+#     style = style_data_conditional.copy()
+#     if active:
+#         style.append(
+#             {
+#                 "if": {"row_index": active["row"]},
+#                 "backgroundColor": "rgba(150, 180, 225, 0.2)",
+#                 "border": "1px solid blue",
+#             },
+#         )
+#     if active is None:
+#         style = None
+#     return style
 
 
 if __name__ == '__main__':
