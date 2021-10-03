@@ -99,7 +99,7 @@ app.layout = html.Div(
             Search for Bus Stops served by one or more routes. 
             When selecting multiple routes, the application will show stops that
             are served by either route. 
-            Select `shared`to see only the stops that are shared by the selected routes. 
+            To see stops that are shared check the tick box. 
            ''', style={'textAlign': 'left',
                        'marginLeft': 150,
                        'marginRight': 100,
