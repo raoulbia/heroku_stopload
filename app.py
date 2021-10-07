@@ -84,7 +84,7 @@ app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets,
                 )
 # app.scripts.config.serve_locally = True
-# app.css.config.serve_locally = True
+app.css.config.serve_locally = True
 server = app.server
 app.title = 'Stop Explorer'
 app.layout = html.Div(
