@@ -45,12 +45,14 @@ df = pd.read_csv('assets/stopload_data.csv',
                  # dtype=str
                  )
 df = df.rename(columns={'StopLoadDay': 'NbrStopsPerDay'})
+df.sort_values(by=['NbrStopsPerDay', 'AtcoCode', 'Direction'], ascending=[False, False, False], inplace=True)
 # print(df.columns)
 df = df[['AtcoCode',
          'PlateCode',
          'ShortCommonName_en',
          'ShortCommonName_ga',
-         'NbrStopsPerDay',
+         # 'NbrStopsPerDay',
+         'Direction' ,
          'RoutesPassingThrough',
          'RoutesPassingThroughCount',
          'OperatorsPassingThrough',
@@ -87,6 +89,8 @@ app = dash.Dash(__name__,
 app.css.config.serve_locally = True
 server = app.server
 app.title = 'Stop Explorer'
+
+
 app.layout = html.Div(
     children=[
 
@@ -95,6 +99,7 @@ app.layout = html.Div(
                                              'background-image': 'url(https://www.transportforireland.ie/wp-content/themes/transportforireland/assets/img/branding/transport-for-ireland-logo.svg)',
                                              'background-position': 'left',
                                              'background-repeat': 'no-repeat'}) ,
+    html.P(children='Last Updated: 11/10/2021', style={'textAlign': 'center',}),
     html.P('''
             Search for Bus Stops served by one or more routes. 
             When selecting multiple routes, the application will show stops that
@@ -191,8 +196,6 @@ app.layout = html.Div(
     ], className='ten columns offset-by-one'
 
 ) # end main Div
-
-
 #############
 # Callbacks #
 #############
