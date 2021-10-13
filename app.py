@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import dash
-import dash_table
+# import dash_table
+from dash import dash_table
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
