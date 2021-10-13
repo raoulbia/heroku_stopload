@@ -258,4 +258,4 @@ def update_datatable(x, y):
 
 if __name__ == '__main__':
     # app.run_server(debug=True)
-    app.server.run(debug=True, threaded=True)
+    app.server.run(debug=True, threaded=True, port=80)
