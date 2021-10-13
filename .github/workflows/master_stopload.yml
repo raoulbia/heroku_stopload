@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'stopload'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EB285DB010E34E80932E5B5D592A5735 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_66EA6D5DA0DE4599AADD3ABA48695877 }}
